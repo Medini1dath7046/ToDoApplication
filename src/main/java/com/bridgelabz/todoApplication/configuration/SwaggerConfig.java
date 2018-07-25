@@ -1,5 +1,4 @@
 package com.bridgelabz.todoApplication.configuration;
-import java.util.Optional;
 
 /*****************************************************************************************************
  * Created By:Medini P.D
@@ -8,11 +7,6 @@ import java.util.Optional;
  ********************************************************************************************************/
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-
-import com.bridgelabz.todoApplication.noteservice.Note;
-import com.bridgelabz.todoApplication.utilservice.NoteExceptionHandler;
-
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.spi.DocumentationType;

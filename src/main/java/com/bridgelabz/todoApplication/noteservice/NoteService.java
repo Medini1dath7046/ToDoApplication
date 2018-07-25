@@ -18,5 +18,6 @@ public interface NoteService {
 	public List<Note> displaypin(String token);
 	public void updateNote(String noteId, String title, String description, String Token);
 	public List<Note> displayarchive(String token1);
-	void setReminder(String token, String id, String reminderTime) throws UserException, ParseException;
+	public void setReminder(String token, String id, String reminderTime) throws UserException, ParseException;
+	
 }

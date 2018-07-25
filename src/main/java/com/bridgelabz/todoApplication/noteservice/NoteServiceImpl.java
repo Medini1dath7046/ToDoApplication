@@ -13,15 +13,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import javax.validation.ConstraintViolationException;
-
-import org.assertj.core.util.Preconditions;
 import org.omg.CORBA.UserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
 import com.bridgelabz.todoApplication.userservice.User;
 import com.bridgelabz.todoApplication.userservice.UserRepository;
 import com.bridgelabz.todoApplication.utilservice.JWToken;
@@ -29,15 +27,15 @@ import com.bridgelabz.todoApplication.utilservice.NoteExceptionHandler;
 import com.bridgelabz.todoApplication.utilservice.UserExceptionHandler;
 
 @Service
-public class NoteServiceImpl implements NoteService {
+public class NoteServiceImpl<labelRepository> implements NoteService {
 
 	@Autowired
 	NoteRepository noteRepository;
+	
 	@Autowired
 	UserRepository userRepository;
 	@Autowired
 	JWToken jwToken;
-	private Timer timer;
 
 	@Override
 	public void createNote(Note note, String token) {
@@ -54,20 +52,21 @@ public class NoteServiceImpl implements NoteService {
 		} catch (DataIntegrityViolationException | ConstraintViolationException e) {
 			throw new NoteExceptionHandler("Note cannot be created due to database error, please try again later");
 		}
-	}
-
+}
+	
+	
 	@Override
 	public void deleteNote(String noteId) {
 		Optional<Note> optionalnote = noteRepository.findById(noteId);
 		if (!optionalnote.isPresent()) {
 			throw new UsernameNotFoundException("User not Found");
 		}
-		if (!optionalnote.get().isTrash()) {
-			throw new NoteExceptionHandler("Note is not present in trash");
-		}
+	//	if (!optionalnote.get().isTrash()) {
+	//		throw new NoteExceptionHandler("Note is not present in trash");
+	//	}
 		noteRepository.deleteById(noteId);
 	}
-
+	
 	@Override
 	public void updateNote(String noteId, String title, String description, String token) {
 		String email = jwToken.verifyToken(token);
@@ -89,7 +88,7 @@ public class NoteServiceImpl implements NoteService {
 	public List<Note> displayAllNotes(String token) {
 		String email = jwToken.verifyToken(token);
 		User user = userRepository.findByEmail(email);
-		Long userId = user.getId();
+		String userId = user.getId();
 		List<Note> noteList = noteRepository.findNotesByUserId(userId);
 		System.out.println(noteList);
 		return noteList;
@@ -99,7 +98,7 @@ public class NoteServiceImpl implements NoteService {
 	public List<Note> displaypin(String token) {
 		String email = jwToken.verifyToken(token);
 		User user = userRepository.findByEmail(email);
-		Long userId = user.getId();
+		String userId = user.getId();
 		List<Note> noteList = noteRepository.findNotesByUserId(userId);
 		List<Note> pinnedlist = new ArrayList<Note>();
 
@@ -115,7 +114,7 @@ public class NoteServiceImpl implements NoteService {
 	public List<Note> displayarchive(String token) {
 		String email = jwToken.verifyToken(token);
 		User user = userRepository.findByEmail(email);
-		Long userId = user.getId();
+		String userId = user.getId();
 		List<Note> noteList = noteRepository.findNotesByUserId(userId);
 		List<Note> archiveList = new ArrayList<Note>();
 		for (Note n : noteList) {
@@ -123,7 +122,6 @@ public class NoteServiceImpl implements NoteService {
 				archiveList.add(n);
 			}
 		}
-		System.out.println(archiveList);
 		return archiveList;
 	}
 	
@@ -146,6 +144,4 @@ public class NoteServiceImpl implements NoteService {
 	}
 }
 
-
-	
 	

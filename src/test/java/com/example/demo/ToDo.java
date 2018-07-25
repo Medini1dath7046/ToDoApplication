@@ -1,8 +1,6 @@
-
 package com.example.demo;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +63,6 @@ public class ToDo {
 		               .andExpect(jsonPath("$.message").value("password changed successfully!!!"))
 		               .andExpect(jsonPath("$.status").value(200));
 		   }*/
-	}
+}
 
 

@@ -15,8 +15,8 @@ public class User {
 
 @Id
 @Column(name = "Id")
-	private Long id;
-	private static AtomicLong  COUNTER= new AtomicLong();
+	private String id;
+
 	@Column(name = "First_Name", length = 15, nullable = false)
 	private String firstName;
 	@Column(name = "Last_Name", length = 15, nullable = false)
@@ -28,10 +28,7 @@ public class User {
 	@Column(name = "Verified_Account", length = 5, nullable = false)
 	private boolean isVerified;
 
-	public User()
-	{
-		this.id=COUNTER.incrementAndGet();
-	}
+
 	
 	public boolean isVerified() {
 		return isVerified;
@@ -57,11 +54,11 @@ public class User {
 		this.lastName = lastName;
 	}
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long Id) {
+	public void setId(String Id) {
 		this.id = Id;
 	}
 

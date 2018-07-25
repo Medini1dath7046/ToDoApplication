@@ -11,26 +11,29 @@ import io.swagger.annotations.ApiModelProperty;
 import javax.persistence.Id;
 
 @Document(collection = "note")
-public class Note
-{	
+public class Note {
 	@Id
 	@ApiModelProperty(hidden = true)
 	private String id;
-	
+
 	@ApiModelProperty(hidden = true)
 	private String createdDate;
-	
+
 	@ApiModelProperty(hidden = true)
 	private boolean Trash;
 
-	
-	
+	@ApiModelProperty(hidden = true)
+	private String userId;
+
+	@ApiModelProperty(hidden = true)
+	private String labelName;
+
 	private String archive;
 	private String description;
 	private String title;
 	private String pin;
-	
-		public String getId() {
+
+	public String getId() {
 		return id;
 	}
 
@@ -58,8 +61,13 @@ public class Note
 		this.pin = pin;
 	}
 
-	@ApiModelProperty(hidden = true)
-	private Long userId;
+	public String getLabelName() {
+		return labelName;
+	}
+
+	public void setLabelName(String labelName) {
+		this.labelName = labelName;
+	}
 
 	public String getTitle() {
 		return title;
@@ -85,11 +93,12 @@ public class Note
 		this.createdDate = string;
 	}
 
-	public Long getuserId() {
+	public String getuserId() {
 		return userId;
 	}
-	public void setUserId(Long long1) {
-		this.userId = long1;
+
+	public void setUserId(String string) {
+		this.userId = string;
 	}
 
 	public boolean isTrash() {
